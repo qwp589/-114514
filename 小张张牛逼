@@ -1,0 +1,165 @@
+repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game:GetService("Players").LocalPlayer
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "撕咬之夜脚本",
+   LoadingTitle = "加载中...",
+   LoadingSubtitle = "脚本作者 小张张 X",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "RayfieldConfig",
+      FileName = "FengYuConfig"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink",
+      RememberJoins = true
+   },
+   KeySystem = false,
+   KeySettings = {
+      Title = "密钥系统",
+      Subtitle = "输入密钥",
+      Note = "密钥: 114514",
+      FileName = "Key",
+      SaveKey = true,
+      ReadOnly = false,
+      Characters = "1234567890"
+   }
+})
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Lighting = game:GetService("Lighting")
+local LocalPlayer = Players.LocalPlayer
+
+local noclipEnabled = false
+local noclipConnection = nil
+local fullbrightEnabled = false
+local autoDoorEnabled = false
+local autoDoorConnection = nil
+local infiniteStaminaEnabled = false
+local infiniteStaminaConnection = nil
+local runSpeedEnabled = false
+local walkSpeedEnabled = false
+local runSpeedValue = 24
+local walkSpeedValue = 15
+local autoRepairEnabled = false
+local autoRepairDelay = 0.5
+local autoRepairThread = nil
+local hitboxEnabled = false
+local hitboxSize = 15
+local hitboxConnection = nil
+local killAllEnabled = false
+local autoBlockEnabled = false
+
+local SafePlatform = Instance.new('Part')
+SafePlatform.Name = 'SafePlatform'
+SafePlatform.Size = Vector3.new(50, 2, 50)
+SafePlatform.Position = Vector3.new(0, 1000, 0)
+SafePlatform.Anchored = true
+SafePlatform.CanCollide = true
+SafePlatform.Material = Enum.Material.ForceField
+SafePlatform.Color = Color3.fromRGB(0, 170, 255)
+SafePlatform.Transparency = 0.3
+SafePlatform.Parent = workspace
+
+-- ===== 主要功能标签页 =====
+local MainTab = Window:CreateTab("主要功能", 4483362458)
+local MainSection = MainTab:CreateSection("基础功能")
+
+MainTab:CreateToggle({
+   Name = "绕过反作弊",
+   CurrentValue = false,
+   Flag = "BypassAnticheat",
+   Callback = function(Value)
+      if Value then
+         for _, obj in pairs(getgc(true)) do
+            if type(obj) == "function" then
+               local info = debug.getinfo(obj)
+               if info and info.name == "IsInBypass" then
+                  hookfunction(obj, function() return true end)
+               end
+            end
+         end
+         Rayfield:Notify({
+            Title = "成功",
+            Content = "反作弊已绕过",
+            Duration = 6.5,
+            Image = 4483362458
+         })
+      end
+   end
+})
+
+MainTab:CreateToggle({
+   Name = "自动挡门",
+   CurrentValue = false,
+   Flag = "AutoDoor",
+   Callback = function(Value)
+      autoDoorEnabled = Value
+      if autoDoorEnabled then
+         if autoDoorConnection then autoDoorConnection:Disconnect() end
+         autoDoorConnection = RunService.RenderStepped:Connect(function()
+            local playerGui = LocalPlayer:WaitForChild('PlayerGui')
+            local dot = playerGui:FindFirstChild('Dot')
+            if dot and dot:IsA('ScreenGui') then
+               local container = dot:FindFirstChild('Container')
+               if container then
+                  local frame = container:FindFirstChild('Frame')
+                  if frame and frame:IsA('GuiObject') then
+                     frame.AnchorPoint = Vector2.new(0.5, 0.5)
+                     frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+                  end
+               end
+            end
+         end)
+      else
+         if autoDoorConnection then autoDoorConnection:Disconnect() end
+      end
+   end
+})
+
+MainTab:CreateToggle({
+   Name = "穿墙",
+   CurrentValue = false,
+   Flag = "Noclip",
+   Callback = function(Value)
+      noclipEnabled = Value
+      if noclipEnabled then
+         if noclipConnection then noclipConnection:Disconnect() end
+         noclipConnection = RunService.Stepped:Connect(function()
+            if LocalPlayer.Character then
+               for _, part in ipairs(LocalPlayer.Character:GetDescendants()) do
+                  if part:IsA('BasePart') then
+                     part.CanCollide = false
+                  end
+               end
+            end
+         end)
+      else
+         if noclipConnection then noclipConnection:Disconnect() end
+         if LocalPlayer.Character then
+            for _, part in ipairs(LocalPlayer.Character:GetDescendants()) do
+               if part:IsA('BasePart') then
+                  part.CanCollide = true
+               end
+            end
+         end
+      end
+   end
+})
+
+MainTab:CreateToggle({
+   Name = "全亮",
+   CurrentValue = false,
+   Flag = "Fullbright",
+   Callback = function(Value)
+      fullbrightEnabled = Value
+      if fullbrightEnabled then
+         Lighting.Brightness = 5
+      
