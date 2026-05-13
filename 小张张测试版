@@ -1,0 +1,145 @@
+repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game:GetService("Players").LocalPlayer
+
+local FengYuUI = loadstring(game:HttpGet('https://raw.githubusercontent.com/FengYu-X/FengYu-ui/refs/heads/main/UI.lua'))()
+
+local Window = FengYuUI:CreateWindow({
+    Subtitle = "脚本作者 小张张",
+    Title = "小张张脚本",
+    Keybind = Enum.KeyCode.RightControl,
+})
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Lighting = game:GetService("Lighting")
+local LocalPlayer = Players.LocalPlayer
+
+local noclipEnabled = false
+local noclipConnection = nil
+local fullbrightEnabled = false
+local autoDoorEnabled = false
+local autoDoorConnection = nil
+local infiniteStaminaEnabled = false
+local infiniteStaminaConnection = nil
+local runSpeedEnabled = false
+local walkSpeedEnabled = false
+local runSpeedValue = 24
+local walkSpeedValue = 15
+local autoRepairEnabled = false
+local autoRepairDelay = 0.5
+local autoRepairThread = nil
+local hitboxEnabled = false
+local hitboxSize = 15
+local hitboxConnection = nil
+local killAllEnabled = false
+本地自动阻止启用=假
+
+local safe platform = instance . new(' Part ')
+安全平台。Name = '安全平台'
+安全平台。Size = Vector3.new(50，2，50)
+SafePlatform.Position = Vector3.new(0, 1000, 0)
+SafePlatform.Anchored = true
+SafePlatform.CanCollide = true
+SafePlatform.Material = Enum.Material.ForceField
+SafePlatform.Color = Color3.fromRGB(0, 170, 255)
+SafePlatform.Transparency = 0.3
+SafePlatform.Parent = workspace
+
+local MainTab = Window:Tab('[主要]', '84830962019412')
+local MainSection = MainTab:Section('主要功能', { Y = '84830962019412', F = '84830962019412' }, true)
+
+MainSection:Toggle('绕过反作弊', false, function(state)
+    if state then
+        for _, obj in pairs(getgc(true)) do
+            if type(obj) == "function" then
+                local info = debug.getinfo(obj)
+                if info and info.name == "IsInBypass" then
+                    hookfunction(obj, function() return true end)
+                end
+            end
+        end
+        Window:Notification('已打开', '', 'Success', 4)
+    end
+end)
+
+MainSection:Toggle('自动挡门', false, function(state)
+    autoDoorEnabled = state
+    if autoDoorEnabled then
+        if autoDoorConnection then autoDoorConnection:Disconnect() end
+        autoDoorConnection = RunService.RenderStepped:Connect(function()
+            local playerGui = LocalPlayer:WaitForChild('PlayerGui')
+            local dot = playerGui:FindFirstChild('Dot')
+            if dot and dot:IsA('ScreenGui') then
+                local container = dot:FindFirstChild('Container')
+                if container then
+                    local frame = container:FindFirstChild('Frame')
+如果frame和frame:IsA('GuiObject ')则
+框架锚点= Vector2.new(0.5，0.5)
+框架. Position = UDim2.new(0.5，0，0.5，0)
+结束
+结束
+结束
+结束)
+其他
+如果autoDoorConnection，则自动门连接:断开()结束
+结束
+结束)
+
+主要部分:切换('穿墙,假,函数（状态)
+noclipEnabled =状态
+如果noclipEnabled，则
+假如noclipconnection，则noclip连接:断开()结束
+noclipConnection = RunService。单步执行：连接（函数()
+如果LocalPlayer。那么性格呢
+对于_，部分在ipairs(LocalPlayer。Character:GetDescendants()) do
+如果部分:IsA('BasePart ')，则
+部分。CanCollide = false
+结束
+结束
+结束
+结束)
+其他
+假如noclipconnection，则noclip connection:Disconnect()end
+如果LocalPlayer。那么性格呢
+重复task.wait()直到游戏载入()
+如果部分:IsA('BasePart ')，则
+部分100 . can collide = true
+结束
+结束
+结束
+结束
+结束)
+
+主要部分:切换('全亮,假,函数（状态)
+fullbrightEnabled = state
+如果fullbrightEnabled，则
+照明。亮度= 5
+照明。时钟时间= 14
+照明100000
+照明GlobalShadows = false
+照明Ambient = Color3.fromRGB(255，255，255)
+其他
+照明。亮度= 1
+照明。时钟时间= 0
+照明100 .雾结束= 500
+照明GlobalShadows = true
+照明环境光= Color3.fromRGB(0，0，0)
+结束
+结束)
+
+主部分:按钮('删除所有门，函数()
+本地游戏地图=工作区。地图:FindFirstChild('游戏地图)
+如果游戏地图然后
+本地门=游戏地图:findfirtschild("门")
+如果门那么
+门:销毁()
+窗口:通知('成功', '已删除所有门，‘成功’，3)
+结束
+结束
+结束)
+
+local StaminaTab = Window:Tab('[体力]', '84830962019412')
+本地StaminaSection = S
