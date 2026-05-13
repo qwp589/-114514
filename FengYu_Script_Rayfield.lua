@@ -1,31 +1,31 @@
-repeat task.wait() until game:IsLoaded()
-repeat task.wait() until game:GetService("Players").LocalPlayer
+重复task.wait()直到游戏载入() task.wait() 重复 game:IsLoaded()
+重复task.wait()直到游戏:GetService(“玩家”)。本地播放器task.wait()直到游戏:GetService(“玩家”).本地播放器
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+当地的光线场=负荷线(游戏:http get(https://Sirius .'菜单/光线场'))()Rayfield = loadstring(游戏:HttpGet(https://sirius.menu/rayfield的))()
 
-local Window = Rayfield:CreateWindow({
-   Name = "撕咬之夜脚本",
-   LoadingTitle = "加载中...",
-   LoadingSubtitle = "脚本作者 风御 X",
-   ConfigurationSaving = {
-      Enabled = true,
-      FolderName = "RayfieldConfig",
-      FileName = "FengYuConfig"
+当地的窗口=光线场:创建窗口({ Window = ray field:创建窗口({
+名称="撕咬之夜脚本","撕咬之夜脚本",
+加载标题="加载中...","加载中...",
+LoadingSubtitle ="脚本作者 小张张x "，"脚本作者 小张张x ",
+配置保存= {
+启用=真实的，真实的,
+文件夹名=" RayfieldConfig "，" RayfieldConfig ",
+文件名=“风雨配置”“风雨配置”
    },
-   Discord = {
-      Enabled = false,
-      Invite = "noinvitelink",
-      RememberJoins = true
+不和= {
+启用=假，错误的,
+邀请=“noinvitelink”，“noinvitelink”，
+RememberJoins = truetrue
    },
-   KeySystem = false,
-   KeySettings = {
-      Title = "密钥系统",
-      Subtitle = "输入密钥",
-      Note = "密钥: 114514",
-      FileName = "Key",
-      SaveKey = true,
-      ReadOnly = false,
-      Characters = "1234567890"
+密钥系统=错误的，错误的,
+按键设置= {
+标题="密钥系统","密钥系统",
+字幕= "输入密钥","输入密钥",
+注意= "密钥: 114514","密钥: 114514",
+文件名="钥匙"，"钥匙",
+保存密钥=真实的,
+只读=
+字符="1234567890"
    }
 })
 
